@@ -81,14 +81,3 @@ The parameters are split into two halves, separated by a colon, the left hand si
 * To monitor the logs of the container in realtime: `docker logs -f organizr`
 * Container version number: `docker inspect -f '{{ index .Config.Labels "build_version" }}' organizr`
 * Image version number: `docker inspect -f '{{ index .Config.Labels "build_version" }}' organizrtools/docker-organizr-v2`
-
-<img src="https://user-images.githubusercontent.com/16184466/53614287-a9b73480-3b96-11e9-9c8e-e32b4ae20c0d.png">
-
-<p align="center"><a href="https://www.browserstack.com"><img src="https://avatars2.githubusercontent.com/u/1119453?s=200&v=4g"></a></p>
-<p align="center"><a href="https://www.browserstack.com">BrowserStack</a> for allowing us to use their platform for testing</p>
-<p>This project is supported by:</p>
-<p>
-  <a href="https://www.digitalocean.com/">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
-  </a>
-</p>

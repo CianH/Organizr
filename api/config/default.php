@@ -251,7 +251,6 @@ return array(
 	'description' => 'Organizr - Accept no others',
 	'debugErrors' => false,
 	'healthChecksURL' => 'https://healthchecks.io/api/v1/checks/',
-	'gaTrackingID' => '',
 	'loginAttempts' => '5',
 	'loginLockout' => '60000',
 	'ombiDefaultFilterAvailable' => true,

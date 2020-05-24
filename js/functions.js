@@ -1198,7 +1198,7 @@ function loadMarketplaceThemesItems(themes){
                 <td>`+v.category+`</td>
                 <td>`+v.status+`</td>
                 <td style="text-align:center"><button type="button" onclick='aboutTheme(`+JSON.stringify(v)+`);' class="btn btn-success btn-outline btn-circle btn-lg popup-with-form" href="#about-theme-form" data-effect="mfp-3d-unfold"><i class="fa fa-info"></i></button></td>
-                <td style="text-align:center"><button type="button" onclick='installTheme(`+JSON.stringify(v)+`);themeAnalytics("`+ v.name +`");' class="btn btn-info btn-outline btn-circle btn-lg"><i class="`+installButton+`"></i></button></td>
+                <td style="text-align:center"><button type="button" onclick='installTheme(`+JSON.stringify(v)+`);' class="btn btn-info btn-outline btn-circle btn-lg"><i class="`+installButton+`"></i></button></td>
                 <td style="text-align:center"><button type="button" onclick='removeTheme(`+JSON.stringify(v)+`);' class="btn btn-danger btn-outline btn-circle btn-lg" `+removeButton+`><i class="fa fa-trash"></i></button></td>
             </tr>
         `;
@@ -3348,156 +3348,6 @@ function checkCommitLoad(){
         });
     }
 }
-function sponsorLoad(){
-    sponsorsJSON().success(function(data) {
-        try {
-            var response = JSON.parse(data);
-        }catch(e) {
-            console.log(e + ' error: ' + data);
-            orgErrorAlert('<h4>' + e + '</h4>' + formatDebug(data));
-            return false;
-        }
-        /*for (var a in reverseObject(json)){
-            var latest = a;
-            break;
-        }
-        if(latest !== currentVersion){
-            console.log('Update Function: Update to '+latest+' is available');
-            message(window.lang.translate('Update Available'),latest+' '+window.lang.translate('is available, goto')+' <a href="javascript:void(0)" onclick="tabActions(event,\'Settings\',0);$(\'#update-button\').click()"><span lang="en">Update Tab</span></a>',activeInfo.settings.notifications.position,'#FFF','update','60000');
-        }*/
-        $('#sponsorList').html(buildSponsor(response));
-        $('#sponsorListModals').html(buildSponsorModal(response));
-        $('.sponsor-items').owlCarousel({
-            nav:false,
-            autoplay:true,
-            dots:false,
-            margin:10,
-            autoWidth:true,
-            items:4
-        });
-    }).fail(function(xhr) {
-        console.error("Organizr Function: Github Connection Failed");
-    });
-}
-function sponsorAbout(id,array){
-    var coupon = (array.coupon == null) ? false : true;
-    var couponAbout = (array.coupon_about == null) ? false : true;
-    var extraInfo = (coupon && couponAbout) ? `
-        <h3>Coupon Code:</h3>
-        <p><span class="label label-rouded label-info pull-right">`+array.coupon+`</span>
-        <span class=" pull-left">`+array.coupon_about+`</span></p>
-    ` : '';
-    return `
-        <!--  modal content -->
-        <div id="sponsor-`+id+`-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel-`+id+`" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="mySmallModalLabel-`+id+`">`+array.company_name+`</h4> </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="comment-center p-t-10">
-                                    <div class="comment-body b-none">
-                                        <div class="user-img"> <img src="`+array.logo+`" alt="user" class="img-circle"> </div>
-                                        <div class="mail-content">
-                                            <h5><a href="`+array.website+`" target="_blank">`+array.company_name+`</a></h5>
-                                            `+array.about+extraInfo+`
-                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-    `;
-}
-function buildSponsor(array){
-    var sponsors = '';
-    $.each(array, function(i,v) {
-        var hasCoupon = '';
-        if(v.about){
-            if(v.coupon){
-                hasCoupon = `
-                    <span class="text-center has-coupon-text">Has Coupon</span>
-                    <span class="text-center has-coupon"><i class="fa fa-ticket" aria-hidden="true"></i></span>
-                `;
-            }
-        }
-        var sponsorAboutModal = (v.about) ? 'data-toggle="modal" data-target="#sponsor-'+i+'-modal" onclick="sponsorAnalytics(\''+v.company_name+'\');"' : 'onclick="window.open(\''+ v.website +'\', \'_blank\');sponsorAnalytics(\''+v.company_name+'\');"';
-        sponsors += `
-            <!-- /.usercard -->
-            <div class="item lazyload recent-sponsor mouse imageSource mouse" `+sponsorAboutModal+` data-src="`+v.logo+`">
-                <span class="elip recent-title">`+v.company_name+`</span>
-                `+ hasCoupon +`
-            </div>
-            <!-- /.usercard-->
-        `;
-    });
-    sponsors += `
-        <!-- /.usercard -->
-        <div class="item lazyload recent-sponsor mouse imageSource mouse" onclick="window.open('https://www.patreon.com/bePatron?c=1320444&rid=2874514', '_blank')" data-src="plugins/images/sponsor.png">
-            <span class="elip recent-title" lang="en">Become Sponsor</span>
-        </div>
-        <!-- /.usercard-->
-    `;
-    return sponsors;
-}
-function buildSponsorModal(array){
-    var sponsors = '';
-    $.each(array, function(i,v) {
-        var sponsorAboutModal = (v.about) ? sponsorAbout(i,v) : '';
-        sponsors += sponsorAboutModal;
-
-    });
-    return sponsors;
-}
-function sponsorAnalytics(sponsor_name){
-    var uuid = activeInfo.settings.misc.uuid;
-    $.ajax({
-        type: 'POST',
-        url: 'https://api.organizr.app/',
-        data: {
-            'sponsor_name': sponsor_name,
-            'user_uuid': uuid,
-            'cmd': 'sponsor'
-        },
-        cache: false,
-        async: true,
-        complete: function(xhr, status) {
-            if (xhr.status === 200) {
-                var result = $.parseJSON(xhr.responseText);
-                console.log(result.response.message);
-            }
-        }
-    });
-}
-function themeAnalytics(theme_name){
-    var uuid = activeInfo.settings.misc.uuid;
-    $.ajax({
-        type: 'POST',
-        url: 'https://api.organizr.app/',
-        data: {
-            'theme_name': theme_name,
-            'user_uuid': uuid,
-            'cmd': 'theme'
-        },
-        cache: false,
-        async: true,
-        complete: function(xhr, status) {
-            if (xhr.status === 200) {
-                var result = $.parseJSON(xhr.responseText);
-                console.log(result.response.message);
-            }
-        }
-    });
-}
 function updateBar(){
 	return `
 	<div class="white-box m-0">
@@ -3708,11 +3558,6 @@ function githubVersions() {
 	return $.ajax({
 		url: "https://raw.githubusercontent.com/causefx/Organizr/"+activeInfo.branch+"/js/version.json",
 	});
-}
-function sponsorsJSON() {
-    return $.ajax({
-        url: "https://raw.githubusercontent.com/causefx/Organizr/v2-develop/js/sponsors.json",
-    });
 }
 function newsJSON() {
     return $.ajax({

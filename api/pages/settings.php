@@ -5,7 +5,6 @@ if (file_exists('config' . DIRECTORY_SEPARATOR . 'config.php')) {
     (function() {
         updateCheck();
         authDebugCheck();
-        sponsorLoad();
         newsLoad();
         checkCommitLoad();
         [].slice.call(document.querySelectorAll(\'.sttabs\')).forEach(function(el) {
@@ -164,8 +163,6 @@ if (file_exists('config' . DIRECTORY_SEPARATOR . 'config.php')) {
                             </li>
                             <li onclick="changeSettingsMenu(\'Settings::System Settings::Updates\')" role="presentation" class=""><a id="update-button" href="#settings-settings-updates" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-package"></i></span> <span class="hidden-xs" lang="en">Updates</span></a>
                             </li>
-                            <li onclick="changeSettingsMenu(\'Settings::System Settings::Donate\')" role="presentation" class=""><a id="settings-settings-donate-anchor" href="#settings-settings-donate" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-money"></i></span> <span class="hidden-xs" lang="en">Donate</span></a>
-                            </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -243,89 +240,6 @@ if (file_exists('config' . DIRECTORY_SEPARATOR . 'config.php')) {
                                         </div>
                                     </div>
     							</div>
-    							<div class="row">
-	                                <div class="col-lg-12">
-							            <div class="panel panel-default">
-											<div class="panel-heading bg-org p-t-10 p-b-10">
-												<span class="pull-left m-t-5"><span lang="en">Sponsors</span></span>
-												<div class="clearfix"></div>
-											</div>
-							                <div class="panel-wrapper p-b-0 collapse in bg-org">
-							                	<div id="sponsorList" class="owl-carousel owl-theme sponsor-items"></div>
-							        			<div id="sponsorListModals"></div>
-							                </div>
-							            </div>
-							        </div>
-    							</div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="settings-settings-donate">
-                                <div class="col-lg-12">
-                                    <div class="white-box bg-org">
-                                        <ul class="nav nav-tabs tabs customtab">
-                                            <li class="tab active">
-                                                <a href="#donate-beer" data-toggle="tab" aria-expanded="true"> <span class=""><i class="fa fa-beer text-warning"></i></span> <span class="hidden-xs" lang="en">Beerpay.io</span> </a>
-                                            </li>
-                                            <li class="tab">
-                                                <a href="#donate-paypal" data-toggle="tab" aria-expanded="true"> <span class=""><i class="fa fa-paypal text-info"></i></span> <span class="hidden-xs" lang="en">PayPal</span> </a>
-                                            </li>
-                                            <li class="tab">
-                                                <a href="#donate-square" data-toggle="tab" aria-expanded="false"> <span class=""><i class="fa mdi mdi-square-inc-cash mdi-18px text-success"></i></span> <span class="hidden-xs" lang="en">Square Cash</span> </a>
-                                            </li>
-                                            <li class="tab">
-                                                <a href="#donate-crypto" data-toggle="tab" aria-expanded="false"> <span class=""><i class="fa mdi mdi-coin mdi-18px text-info"></i></span> <span class="hidden-xs" lang="en">Cryptos</span> </a>
-                                            </li>
-                                            <li class="tab">
-                                                <a href="#donate-patreon" data-toggle="tab" aria-expanded="false"> <span class=""><i class="fa mdi mdi-account-multiple mdi-18px text-danger"></i></span> <span class="hidden-xs" lang="en">Patreon</span> </a>
-                                            </li>
-                                            <li class="tab">
-                                                <a href="#donate-ads" data-toggle="tab" aria-expanded="false"> <span class=""><i class="fa mdi mdi-google mdi-18px text-danger"></i></span> <span class="hidden-xs" lang="en">Google Ads</span> </a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                        	<div class="tab-pane active" id="donate-beer">
-                                                <blockquote>Want to show support on Beerpay.io?  Send me a beer :)<br/>Please click the button to continue.</blockquote>
-                                                <button onclick="window.open(\'https://beerpay.io/causefx/Organizr\', \'_blank\')" class="btn btn-primary btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-link"></i></span><span lang="en">Continue To Website</span></button>
-                                            </div>
-                                            <div class="tab-pane" id="donate-paypal">
-                                                <blockquote>I have chosen to go with PayPal Pools so everyone can see how much people have donated.<br/>Please click the button to continue.</blockquote>
-                                                <button onclick="window.open(\'https://paypal.me/pools/c/83JNaMBESR\', \'_blank\')" class="btn btn-primary btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-link"></i></span><span lang="en">Continue To Website</span></button>
-                                            </div>
-                                            <div class="tab-pane" id="donate-square">
-                                                <blockquote>If you use the Square Cash App, you can donate with that if you like.<br/>Please click the button to continue.</blockquote>
-                                                <button onclick="window.open(\'https://cash.me/$CauseFX\', \'_blank\')" class="btn btn-primary btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-link"></i></span><span lang="en">Continue To Website</span></button>
-                                            </div>
-                                            <div class="tab-pane" id="donate-crypto">
-                                                <blockquote>Want to donate a small amount of Crypto?.<br/>Please use the QR Code or Wallet ID.</blockquote>
-                                                <div class="col-lg-4 col-xs-12">
-                                                    <div class="lazyload qr-code" data-src="plugins/images/Bitcoin_QR_code.png"></div>
-                                                    <div class="clearfix"></div>
-                                                    <code>18dNtPKgor6pV5DJhYNqFxLJJ2BKugo4K9</code>
-                                                </div>
-                                                <div class="col-lg-4 col-xs-12">
-                                                    <div class="lazyload qr-code" data-src="plugins/images/Litecoin_QR_code.png"></div>
-                                                    <div class="clearfix"></div>
-                                                    <code>LejRxt8huhFGpVrp7TM43VSstrzKGxf8Cj</code>
-                                                </div>
-                                                <div class="col-lg-4 col-xs-12">
-                                                    <div class="lazyload qr-code" data-src="plugins/images/Ethereum_QR_code.png"></div>
-                                                    <div class="clearfix"></div>
-                                                    <code>0x605b678761af62C02Fe0fA86A99053D666dF5d6f</code>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="tab-pane" id="donate-patreon">
-                                                <blockquote>Need specialized support or just want to support Organizr?  If so head to Patreon...<br/>Please click the button to continue.</blockquote>
-                                                <button onclick="window.open(\'https://www.patreon.com/join/organizr?\', \'_blank\')" class="btn btn-primary btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-link"></i></span><span lang="en">Continue To Website</span></button>
-                                            </div>
-                                            <div class="tab-pane" id="donate-ads">
-                                                <blockquote>Money not an option?  No problem.  Show some love to this Google Ad below:</blockquote>
-                                                 <button onclick="window.open(\'https://organizr.app/ads/google.html\', \'_blank\')" class="btn btn-primary btn-rounded waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-link"></i></span><span lang="en">Continue To Website</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="settings-settings-updates">
                                 <div id="githubVersions"></div>

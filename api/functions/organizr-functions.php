@@ -1251,13 +1251,6 @@ function getCustomizeAppearance()
 							'value' => 'bottom'
 						)
 					)
-				),
-				array(
-					'type' => 'input',
-					'name' => 'gaTrackingID',
-					'label' => 'Google Analytics Tracking ID',
-					'placeholder' => 'e.g. UA-XXXXXXXXX-X',
-					'value' => $GLOBALS['gaTrackingID']
 				)
 			),
 			'Colors & Themes' => array(
